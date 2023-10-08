@@ -1,0 +1,134 @@
+{
+	"info": {
+		"_postman_id": "0353d73c-1eb1-45f7-86d8-251fdd297c8b",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20403227",
+		"_collection_link": "https://red-comet-419426.postman.co/workspace/artwallpaper~fc71ee5b-f0bc-4eec-b368-63cdb8643d6f/collection/20403227-0353d73c-1eb1-45f7-86d8-251fdd297c8b?action=share&source=collection_link&creator=20403227"
+	},
+	"item": [
+		{
+			"name": "http://127.0.0.1:8080/api/v1/user-create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"argha.sahist@gmail.com\",\r\n    \"password\":\"14322005\",\r\n    \"secpassword\": \"14322005\",\r\n    \"inviteCode\": \"JBL1423\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/api/v1/user-create",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user-create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8080/api/v1/user-login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"argha.ahit@gmail.com\",\r\n    \"password\": \"14322005\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/api/v1/user-login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user-login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8080/api/v1/vip-add",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"level\":\"VIP 0\",\r\n    \"dailytask\":\"10\",\r\n    \"singleprofit\":\"4.5\",\r\n    \"dailyprofit\": \"20.05\",\r\n    \"totalprofit\":\"100.042\",\r\n    \"usdt\":\"50\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/api/v1/vip-add",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"vip-add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8080/api/v1/vip-list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/api/v1/vip-list",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"vip-list"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
