@@ -23,7 +23,7 @@ app.post('/api/v1/user-create', function userCreate(req, res) {
     try {
         con.query(`SELECT * FROM user WHERE email = '${email}'`, function (error, result) {
             if (result[0] == undefined) {
-                con.query(`INSERT INTO user (email, password, secpassword) VALUES ('${email}', '${password}', '${secpassword}')`,
+                con.query(`INSERT INTO user (email, password, secpassword, currentvalance) VALUES ('${email}', '${password}', '${secpassword}', '${40})`,
                     function (err, result2) {
                         console.log(result2["protocol41"])
                         if (result2["protocol41"] == true) {
@@ -59,7 +59,9 @@ app.post('/api/v1/user-login', function (req, res) {
                 status: 404
             })
         } else {
+            console.log(result)
             if (result[0]["password"] == req.body.password) {
+
                 res.status(200).json({
                     message: "User logn succes",
                     data: result,
@@ -111,6 +113,94 @@ app.get('/api/v1/vip-list', function (req, res) {
     })
 })
 
+app.post('/api/v1/user-password', function (req, res) {
+    const id = req.body.id
+    const oldpassword = req.body.oldpassword
+    const newpassword = req.body.newpassword
+
+    con.query(`SELECT * FROM user WHERE id = ${id}`, function (err, result) {
+        if (result[0]["password"] == oldpassword) {
+            con.query(`UPDATE user SET password = '${newpassword}' WHERE ${id}`, function (err, data) {
+                console.log(data)
+                res.status(200).json({
+                    "message": "new password update",
+                    "status": 200
+                })
+            })
+        } else {
+            res.status(404).json({
+                "message": "oldpassword not match",
+                "status": 404
+            })
+        }
+    })
+})
+app.post('/api/v1/user-secpassword', function (req, res) {
+    const id = req.body.id
+    const oldpassword = req.body.secoldpassword
+    const newpassword = req.body.secnewpassword
+
+    con.query(`SELECT * FROM user WHERE id = ${id}`, function (err, result) {
+        if (result[0]["secpassword"] == oldpassword) {
+            con.query(`UPDATE user SET secpassword = '${newpassword}' WHERE ${id}`, function (err, data) {
+                console.log(data)
+                res.status(200).json({
+                    "message": "new secpassword update",
+                    "status": 200
+                })
+            })
+        } else {
+            res.status(404).json({
+                "message": "secpassword not match",
+                "status": 404
+            })
+        }
+    })
+})
+
+app.post('/api/v1/levl-add', function (req, res) {
+    teamsize = req.body.teamsize;
+    teamrecharge = req.body.teamrecharge;
+    level_name = req.body.level_name;
+    con.query(`INSERT INTO level (teamsize, teamrecharge, level_name) VALUES ('${teamsize}', '${teamrecharge}','${level_name}')`, function (err, result) {
+        res.status(200).json({
+            "message": "leveladd",
+            "status": 200
+        })
+    })
+})
+app.get('/api/v1/levl-list', function (req, res) {
+    con.query('SELECT * FROM level', function (err, result) {
+        res.status(200).json({
+            "message": "level found",
+            "data": result,
+            "status": 200
+        })
+    })
+})
+
+app.post('/api/v1/deposit-alert', function (req, res) {
+    con.query(`INSERT INTO payments (user_id) VALUES ('${req.body.id}')`, function (err, result) {
+        console.log(result)
+        res.status(200).json({
+            "message": "Requset send",
+            "status": 200
+        })
+    });
+})
+
+app.get('/api/v1/depost-list-byuser_id' , function(req, res){
+    id = req.query.id
+    console.log(id)
+    con.query(`SELECT * FROM payments WHERE user_id = '${id}'`, function (err, result){
+        console.log(result)
+        res.status(200).json({
+            "message":"user deposit list",
+            "data": result,
+            "status":200
+        })
+    })
+})
 
 app.listen(8080, function () {
     console.log("server is running on posrt 8080")
