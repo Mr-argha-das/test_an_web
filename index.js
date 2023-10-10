@@ -20,34 +20,72 @@ app.post('/api/v1/user-create', function userCreate(req, res) {
     var password = req.body.password;
     var secpassword = req.body.secpassword;
     var inviteCode = req.body.inviteCode;
-    try {
-        con.query(`SELECT * FROM user WHERE email = '${email}'`, function (error, result) {
-            if (result[0] == undefined) {
-                con.query(`INSERT INTO user (email, password, secpassword, currentvalance) VALUES ('${email}', '${password}', '${secpassword}', '${40})`,
-                    function (err, result2) {
-                        console.log(result2["protocol41"])
-                        if (result2["protocol41"] == true) {
-                            res.status(200).json({
-                                message: "User singup done",
-                                status: 200
-                            })
-                        } else {
-                            res.status(404).json({
-                                message: "some thing went wrong",
-                                status: 404
-                            })
-                        }
-                    })
-            } else {
-                res.status(404).json({
-                    message: "email already exist",
-                    status: 402
-                })
-            }
-        })
+    console.log(req.body)
 
-    } catch (e) {
-        console.log(e)
+    if (inviteCode == null) {
+        min = Math.ceil(1)
+        max = Math.floor(6)
+        yourcode = Math.floor(Math.random() * (max - min + 1)) + min;
+
+        try {
+            con.query(`SELECT * FROM user WHERE email = '${email}'`, function (error, result) {
+                if (result[0] == undefined) {
+                    con.query(`INSERT INTO user (email, password, secpassword, currentvalance, invaitecode) VALUES ('${email}', '${password}', '${secpassword}', ${40}, '${yourcode}')`,
+                        function (err, result2) {
+                            console.log(result2["protocol41"])
+                            if (result2["protocol41"] == true) {
+                                res.status(200).json({
+                                    message: "User singup done",
+                                    status: 200
+                                })
+                            } else {
+                                res.status(404).json({
+                                    message: "some thing went wrong",
+                                    status: 404
+                                })
+                            }
+                        })
+                } else {
+                    res.status(404).json({
+                        message: "email already exist",
+                        status: 402
+                    })
+                }
+            })
+
+        } catch (e) {
+            console.log(e)
+        }
+    } else {
+        try {
+            con.query(`SELECT * FROM user WHERE email = '${email}'`, function (error, result) {
+                if (result[0] == undefined) {
+                    con.query(`INSERT INTO user (email, password, secpassword, currentvalance, invaitecode) VALUES ('${email}', '${password}', '${secpassword}', ${40}, '${inviteCode}')`,
+                        function (err, result2) {
+                            console.log(result2["protocol41"])
+                            if (result2["protocol41"] == true) {
+                                res.status(200).json({
+                                    message: "User singup done",
+                                    status: 200
+                                })
+                            } else {
+                                res.status(404).json({
+                                    message: "some thing went wrong",
+                                    status: 404
+                                })
+                            }
+                        })
+                } else {
+                    res.status(404).json({
+                        message: "email already exist",
+                        status: 402
+                    })
+                }
+            })
+
+        } catch (e) {
+            console.log(e)
+        }
     }
 });
 
@@ -189,15 +227,26 @@ app.post('/api/v1/deposit-alert', function (req, res) {
     });
 })
 
-app.get('/api/v1/depost-list-byuser_id' , function(req, res){
+app.get('/api/v1/depost-list-byuser_id', function (req, res) {
     id = req.query.id
     console.log(id)
-    con.query(`SELECT * FROM payments WHERE user_id = '${id}'`, function (err, result){
+    con.query(`SELECT * FROM payments WHERE user_id = '${id}'`, function (err, result) {
         console.log(result)
         res.status(200).json({
-            "message":"user deposit list",
+            "message": "user deposit list",
             "data": result,
-            "status":200
+            "status": 200
+        })
+    })
+})
+
+app.get('/api/v1/team-list-by-code', function (req, res) {
+    const code = req.query.code;
+    con.query(`SELECT * FROM user WHERE invaitecode = '${code}'`, function (err, result) {
+        res.status(200).json({
+            message: "User Teams",
+            data: result,
+            status: 200
         })
     })
 })
