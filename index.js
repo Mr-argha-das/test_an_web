@@ -36,6 +36,7 @@ app.post('/api/v1/user-create', function userCreate(req, res) {
                             if (result2["protocol41"] == true) {
                                 res.status(200).json({
                                     message: "User singup done",
+                                    data: result.data,
                                     status: 200
                                 })
                             } else {
